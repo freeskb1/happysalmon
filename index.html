@@ -6,7 +6,6 @@
   <meta name="theme-color" content="#0b1220" />
   <title>연어는 행복해 (모바일)</title>
 
-  <!-- Pretendard -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/variable/pretendardvariable.css">
 
@@ -15,23 +14,16 @@
       --bgA:#0b1220; --bgB:#0a0f1c;
       --line: rgba(255,255,255,.14);
       --ink: rgba(255,255,255,.95);
-      --muted: rgba(255,255,255,.80);
-      --accent: #22c55e;
-      --accent2:#60a5fa;
-      --accent3:#fb7185;
+      --accent:#22c55e; --accent2:#60a5fa; --accent3:#fb7185;
       --shadow: 0 22px 70px rgba(0,0,0,.40);
-      --radius: 26px;
-      --pad: 18px;
+      --radius: 26px; --pad: 18px;
     }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: "Pretendard Variable", Pretendard, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
-      color: var(--ink);
-
-      /* colorful / playful background */
+      font-family:"Pretendard Variable", Pretendard, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+      color:var(--ink);
       background:
         radial-gradient(1100px 820px at 14% 12%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 62%),
         radial-gradient(1000px 760px at 88% 18%, color-mix(in srgb, var(--accent2) 42%, transparent), transparent 60%),
@@ -40,93 +32,73 @@
         linear-gradient(135deg, var(--bgA), var(--bgB));
       overflow:hidden;
     }
-
     .wrap{
-      height:100%;
-      max-width: 560px;
-      margin: 0 auto;
+      height:100%; max-width:560px; margin:0 auto;
       padding:
         calc(env(safe-area-inset-top) + var(--pad))
         calc(env(safe-area-inset-right) + var(--pad))
         calc(env(safe-area-inset-bottom) + var(--pad))
         calc(env(safe-area-inset-left) + var(--pad));
-      display:flex;
-      flex-direction:column;
-      gap:14px;
+      display:flex; flex-direction:column; gap:14px;
     }
 
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      line-height:1;
-      min-width: 0;
-    }
-    .brand .t{
-      font-weight: 950;
-      letter-spacing: -.04em;
-      font-size: 18px;
-      opacity: .98;
-      white-space:nowrap;
-    }
-
-    /* counter badge in top header */
+    header{display:flex; align-items:center; justify-content:space-between; gap:12px;}
+    .brand{display:flex; align-items:center; gap:10px; line-height:1; min-width:0;}
+    .brand .t{font-weight:950; letter-spacing:-.04em; font-size:18px; white-space:nowrap; opacity:.98;}
     .counterBadge{
-      display:none; /* only show on game screen */
-      font-weight: 900;
-      letter-spacing: -.02em;
-      font-size: 14px;
-      opacity: .92;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.22);
-      background: rgba(255,255,255,.10);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      flex: 0 0 auto;
-    }
-    .counterBadge.on{ display:inline-flex; }
-
-    /* Panels */
-    .panel{
-      flex: 1;
-      min-height: 420px;
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-      padding: 20px 18px 16px;
       display:none;
-      flex-direction:column;
+      font-weight:900; letter-spacing:-.02em; font-size:14px; opacity:.92;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.10);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      flex:0 0 auto;
     }
-    .panel.on{ display:flex; }
+    .counterBadge.on{display:inline-flex;}
 
+    .hdrRight{display:flex; align-items:center; gap:10px;}
+    .iconBtn{
+      width:42px; height:42px; border-radius:16px;
+      display:inline-flex; align-items:center; justify-content:center;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform .06s ease, filter .12s ease, opacity .12s ease;
+    }
+    .iconBtn:active{transform:scale(.985); filter:brightness(.96);}
+    .iconBtn svg{width:22px; height:22px; opacity:.95}
+
+    .exitBtn{
+      width:auto; height:42px;
+      padding:0 14px;
+      font-size:14px;
+      font-weight:950;
+      letter-spacing:-.02em;
+      color:rgba(255,255,255,.95);
+      user-select:none;
+    }
+
+    .panel{
+      flex:1; min-height:420px;
+      border-radius:var(--radius);
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+      box-shadow:var(--shadow);
+      padding:20px 18px 16px;
+      position:relative; overflow:hidden;
+      display:none; flex-direction:column;
+    }
+    .panel.on{display:flex;}
     .panel::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
+      content:""; position:absolute; inset:-2px; pointer-events:none; opacity:.75;
       background:
         radial-gradient(700px 420px at 12% 0%, rgba(255,255,255,.24), transparent 60%),
         radial-gradient(700px 420px at 88% 100%, rgba(255,255,255,.18), transparent 62%);
-      opacity: .75;
-      pointer-events:none;
     }
-
-    /* subtle confetti dots */
     .panel::after{
-      content:"";
-      position:absolute;
-      inset:-60px;
+      content:""; position:absolute; inset:-60px; pointer-events:none; opacity:.55;
       background:
         radial-gradient(circle at 12% 22%, rgba(250,204,21,.28) 0 8px, transparent 9px),
         radial-gradient(circle at 84% 16%, rgba(96,165,250,.30) 0 7px, transparent 8px),
@@ -134,288 +106,232 @@
         radial-gradient(circle at 18% 78%, rgba(34,197,94,.22) 0 7px, transparent 8px),
         radial-gradient(circle at 40% 10%, rgba(192,132,252,.22) 0 6px, transparent 7px),
         radial-gradient(circle at 52% 88%, rgba(6,182,212,.20) 0 7px, transparent 8px);
-      opacity:.55;
-      pointer-events:none;
     }
 
-    /* Home */
     .homeStage{
-      position:relative;
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap: 18px;
-      text-align:center;
-      padding: 6px 6px 0;
-      z-index:1;
+      position:relative; z-index:1;
+      flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:18px; text-align:center; padding:6px 6px 0;
     }
-
     .homeTitle{
-      font-weight: 980;
-      letter-spacing:-.06em;
-      font-size: clamp(44px, 9vw, 68px);
+      font-weight:980; letter-spacing:-.06em;
+      font-size:clamp(44px,9vw,68px);
       line-height:1.02;
-      text-shadow: 0 12px 34px rgba(0,0,0,.30);
+      text-shadow:0 12px 34px rgba(0,0,0,.30);
     }
     .homeDesc{
-      max-width: 420px;
-      margin: 0;
-      color: rgba(255,255,255,.88);
-      font-weight: 760;
-      letter-spacing: -.02em;
-      font-size: 15px;
-      line-height: 1.45;
+      margin:0; max-width:420px;
+      color:rgba(255,255,255,.88);
+      font-weight:760; letter-spacing:-.02em;
+      font-size:15px; line-height:1.45;
     }
+    .homeButtons{width:100%; display:flex; flex-direction:column; gap:12px; margin-top:10px;}
 
-    .homeButtons{
-      width:100%;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      margin-top: 10px;
-    }
-
-    /* Guide */
     .guideStage{
-      position:relative;
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap: 12px;
-      padding-top: 2px;
-      z-index:1;
+      position:relative; z-index:1;
+      flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:12px; padding-top:2px;
     }
-
-    .guideTop{
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom: 2px;
-      position:relative;
-      z-index:1;
-    }
-    .dotRow{
-      display:flex;
-      gap:7px;
-      align-items:center;
-      justify-content:center;
-      flex:1;
-    }
-    .dot{
-      width:8px; height:8px;
-      border-radius:999px;
-      background: rgba(255,255,255,.28);
-      border: 1px solid rgba(255,255,255,.18);
-    }
-    .dot.on{ background: rgba(255,255,255,.82); }
-
+    .guideTop{width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:2px;}
+    .dotRow{display:flex; gap:7px; align-items:center; justify-content:center; flex:1;}
+    .dot{width:8px; height:8px; border-radius:999px; background:rgba(255,255,255,.28); border:1px solid rgba(255,255,255,.18);}
+    .dot.on{background:rgba(255,255,255,.82);}
     .guideCard{
-      width: 100%;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.09);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 16px 40px rgba(0,0,0,.22);
-      padding: 18px 14px 16px;
-      position:relative;
-      overflow:hidden;
+      width:100%;
+      border-radius:22px; border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.09);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      box-shadow:0 16px 40px rgba(0,0,0,.22);
+      padding:18px 14px 16px;
+      position:relative; overflow:hidden;
     }
     .guideCard::after{
-      content:"";
-      position:absolute;
-      inset:-2px;
+      content:""; position:absolute; inset:-2px; pointer-events:none; opacity:.9;
       background:
         radial-gradient(700px 420px at 20% 0%, rgba(255,255,255,.14), transparent 60%),
         radial-gradient(700px 420px at 80% 100%, rgba(255,255,255,.12), transparent 62%);
-      opacity: .9;
-      pointer-events:none;
     }
 
-    /* Salmon visual shared */
     .salmonWrap{
       position:relative;
-      width: min(310px, 78vw);
-      aspect-ratio: 16 / 10;
+      width:min(310px,78vw);
+      aspect-ratio:16/10;
       filter: drop-shadow(0 18px 28px rgba(0,0,0,.30));
-      transform-origin: 50% 70%;
+      transform-origin:50% 70%;
       animation: boing 1.35s ease-in-out infinite;
-      margin: 0 auto;
+      margin:0 auto;
+      display:flex; align-items:center; justify-content:center;
     }
-    @keyframes boing{
-      0%,100%{ transform: translateY(0) scale(1); }
-      50%{ transform: translateY(-10px) scale(1.02); }
+    @keyframes boing{0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-10px) scale(1.02)}}
+
+    .missionMedia img{
+      width:100%; height:100%;
+      object-fit:contain;
+      display:block;
+      filter: drop-shadow(0 18px 28px rgba(0,0,0,.30));
     }
-    .spark{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      opacity:.95;
-      animation: sparkle 1.8s ease-in-out infinite;
-    }
-    @keyframes sparkle{
-      0%,100%{ transform: translateY(0); opacity:.85; }
-      50%{ transform: translateY(-3px); opacity:1; }
-    }
+    #missionIconGuide svg, #missionIconGame svg{width:100%;height:100%;display:block;}
+
+    .spark{position:absolute; inset:0; pointer-events:none; opacity:.95; animation:sparkle 1.8s ease-in-out infinite;}
+    @keyframes sparkle{0%,100%{transform:translateY(0); opacity:.85} 50%{transform:translateY(-3px); opacity:1}}
 
     .bigName{
-      position:relative;
+      position:relative; z-index:1;
       text-align:center;
-      font-weight: 950;
-      letter-spacing: -.05em;
-      line-height: 1.05;
-      font-size: clamp(44px, 8.5vw, 70px);
-      text-shadow: 0 12px 34px rgba(0,0,0,.28);
-      padding: 6px 8px 0;
-      word-break: keep-all;
-      z-index:1;
+      font-weight:950; letter-spacing:-.05em; line-height:1.05;
+      font-size:clamp(44px,8.5vw,70px);
+      text-shadow:0 12px 34px rgba(0,0,0,.28);
+      padding:6px 8px 0;
+      word-break:keep-all;
     }
-    .pop{ animation: pop .20s ease-out; }
-    @keyframes pop{
-      from{ transform: translateY(6px) scale(.985); filter: brightness(.98); }
-      to{ transform: translateY(0) scale(1); filter: brightness(1); }
-    }
+    .pop{animation:pop .20s ease-out}
+    @keyframes pop{from{transform:translateY(6px) scale(.985); filter:brightness(.98)} to{transform:translateY(0) scale(1); filter:brightness(1)}}
 
-    /* Buttons (general) */
     button{
-      border:0;
-      border-radius: 18px;
-      font-weight: 900;
-      letter-spacing: -.02em;
-      font-size: 18px;
-      cursor:pointer;
-      user-select:none;
+      border:0; border-radius:18px;
+      font-weight:900; letter-spacing:-.02em; font-size:18px;
+      cursor:pointer; user-select:none;
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
-      transition: transform .06s ease, filter .12s ease;
+      transition: transform .06s ease, filter .12s ease, opacity .12s ease;
     }
-    button:active{ transform: scale(.985); filter: brightness(.96); }
+    button:active{transform:scale(.985); filter:brightness(.96);}
 
     .btnPrimary{
-      width:100%;
-      height: 58px;
-      color: #08101f;
-      background: linear-gradient(135deg, var(--accent), rgba(255,255,255,.92));
-      box-shadow: 0 14px 32px rgba(0,0,0,.22);
+      width:100%; height:58px; color:#08101f;
+      background:linear-gradient(135deg, var(--accent), rgba(255,255,255,.92));
+      box-shadow:0 14px 32px rgba(0,0,0,.22);
     }
     .btnGhost{
-      width:100%;
-      height: 58px;
-      color: rgba(255,255,255,.95);
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.16);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      width:100%; height:58px; color:rgba(255,255,255,.95);
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     }
 
-    /* Game panel */
     .gameStage{
-      position:relative;
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap: 12px;
-      padding-top: 4px;
-      z-index:1;
+      position:relative; z-index:1;
+      flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:12px; padding-top:4px;
     }
-
-    /* BIG SQUARE actions */
     .actionsSquare{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 12px;
-      z-index:1;
+      display:grid; grid-template-columns:1fr 1fr; gap:14px;
+      margin-top:12px; z-index:1;
     }
     .squareBtn{
-      aspect-ratio: 1 / 1;
-      width: 100%;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,.18);
-      font-weight: 980;
-      font-size: 24px;
-      letter-spacing: -.03em;
-      line-height: 1.1;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding: 10px;
+      aspect-ratio:1/1; width:100%;
+      border-radius:22px; border:1px solid rgba(255,255,255,.18);
+      font-weight:980; font-size:24px; letter-spacing:-.03em; line-height:1.1;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:10px; padding:10px;
     }
-    .squareBtn .icon{
-      width: 44px;
-      height: 44px;
-      filter: drop-shadow(0 12px 18px rgba(0,0,0,.25));
-    }
-
+    .squareBtn .icon{width:44px; height:44px; filter: drop-shadow(0 12px 18px rgba(0,0,0,.25));}
     .btnClearSquare{
-      background: linear-gradient(135deg, var(--accent), rgba(255,255,255,.95));
-      color: #08101f;
-      box-shadow: 0 16px 40px rgba(0,0,0,.22);
+      background:linear-gradient(135deg, var(--accent), rgba(255,255,255,.95));
+      color:#08101f; box-shadow:0 16px 40px rgba(0,0,0,.22);
+      position:relative; overflow:hidden;
     }
     .btnPassSquare{
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
-      color: rgba(255,255,255,.95);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background:linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      color:rgba(255,255,255,.95);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     }
+    .squareBtn[disabled]{cursor:not-allowed; opacity:.72; filter:saturate(.9); transform:none !important;}
+    .lockHint{font-size:14px; font-weight:900; letter-spacing:-.02em; opacity:.92;}
 
-    .resetRow{ margin-top: 12px; z-index:1; }
-    .btnReset{
-      width:100%;
-      height: 52px;
-      border-radius: 18px;
-      color: rgba(255,255,255,.92);
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.14);
-      font-weight: 850;
-      font-size: 16px;
-    }
-
-    /* Win overlay */
     .overlay{
-      position:absolute;
-      inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding: 22px;
+      position:absolute; inset:0; display:none;
+      align-items:center; justify-content:center; padding:22px;
       background: rgba(5,8,16,.55);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       z-index:5;
     }
-    .overlay.on{ display:flex; }
+    .overlay.on{display:flex;}
 
     .winBox{
       width:100%;
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.10);
-      box-shadow: var(--shadow);
-      padding: 22px 18px 16px;
+      border-radius:24px; border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.10);
+      box-shadow:var(--shadow);
+      padding:22px 18px 16px;
       text-align:center;
     }
-    .winTitle{
-      font-weight: 980;
-      letter-spacing:-.06em;
-      font-size: clamp(34px, 8vw, 56px);
-      margin: 2px 0 10px;
+    .winTitle{font-weight:980; letter-spacing:-.06em; font-size:clamp(34px,8vw,56px); margin:2px 0 10px;}
+    .winSub{margin:0 0 16px; color:rgba(255,255,255,.86); font-weight:720;}
+
+    /* settings modal */
+    .modal{
+      width:100%;
+      border-radius:24px; border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.10);
+      box-shadow:var(--shadow);
+      padding:16px 14px 12px;
+      position:relative;
+      max-height: 78vh;
+      overflow:auto;
     }
-    .winSub{
-      margin:0 0 16px;
-      color: rgba(255,255,255,.86);
-      font-weight: 720;
+    .modalTitleRow{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px;}
+    .modalTitle{font-weight:950; letter-spacing:-.04em; font-size:18px;}
+    .miniBtn{
+      height:40px; border-radius:14px; padding:0 14px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.16);
+      color:rgba(255,255,255,.95);
+      font-size:15px; font-weight:900;
+    }
+    .row{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px 10px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+    }
+    .row + .row{margin-top:10px;}
+    .rowLeft{display:flex; align-items:center; gap:10px; min-width:0;}
+    .rowLeft label{display:flex; align-items:center; gap:10px; cursor:pointer; min-width:0;}
+    .rowLeft input{transform: scale(1.15); accent-color: var(--accent);}
+
+    .thumb{
+      width:44px; height:44px;
+      border-radius:16px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .thumb img{width:100%; height:100%; object-fit:contain; display:block;}
+
+    .missionLabel{
+      font-weight:900; letter-spacing:-.03em;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      max-width: 220px;
+    }
+
+    .stepper{
+      display:flex; align-items:center; gap:10px; flex:0 0 auto;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      border-radius:16px;
+      padding:6px 8px;
+    }
+    .stepper button{
+      width:34px; height:34px; border-radius:12px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      color:rgba(255,255,255,.95);
+      font-size:18px; font-weight:950;
+    }
+    .stepperVal{min-width:18px; text-align:center; font-weight:950;}
+
+    .hint{
+      margin:10px 2px 12px;
+      color:rgba(255,255,255,.82);
+      font-weight:740; font-size:13px; line-height:1.35;
+    }
+    .actionsBar{
+      display:grid; grid-template-columns:1fr 1fr; gap:10px;
+      margin-top:10px;
     }
 
     .srOnly{
@@ -424,7 +340,6 @@
     }
   </style>
 </head>
-
 <body>
   <div class="wrap">
     <header>
@@ -432,10 +347,22 @@
         <div class="t">연어는 행복해</div>
         <div class="counterBadge" id="counterTop">(1/18)</div>
       </div>
+
+      <div class="hdrRight">
+        <!-- 설정: 홈에서만 표시 -->
+        <div class="iconBtn" id="btnSettings" aria-label="설정" style="display:none;">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Zm8.3-2.9-.9-.5.1-1.1.9-.7a1 1 0 0 0 .2-1.3l-1.1-1.9a1 1 0 0 0-1.2-.4l-1 .4-.9-.7-.1-1.1a1 1 0 0 0-.8-1l-2.1-.5a1 1 0 0 0-1.1.6l-.4 1-1.1 0-.7-.9a1 1 0 0 0-1.2-.3l-2 .9a1 1 0 0 0-.6 1.1l.3 1-.8.8-1.1-.1a1 1 0 0 0-1 .8l-.5 2.1a1 1 0 0 0 .6 1.1l1 .4v1.1l-1 .7a1 1 0 0 0-.3 1.2l.9 2a1 1 0 0 0 1.1.6l1-.3.8.8-.1 1.1a1 1 0 0 0 .8 1l2.1.5a1 1 0 0 0 1.1-.6l.4-1h1.1l.7 1a1 1 0 0 0 1.2.3l2-.9a1 1 0 0 0 .6-1.1l-.3-1 .8-.8 1.1.1a1 1 0 0 0 1-.8l.5-2.1a1 1 0 0 0-.6-1.1Z"
+                  fill="rgba(255,255,255,.92)"/>
+          </svg>
+        </div>
+
+        <!-- 종료: 게임에서만 표시 -->
+        <div class="iconBtn exitBtn" id="btnExit" aria-label="종료" style="display:none;">종료</div>
+      </div>
     </header>
 
-    <!-- HOME -->
-    <main class="panel on" id="screenHome" role="main" aria-label="첫 화면">
+    <main class="panel on" id="screenHome">
       <div class="homeStage">
         <div class="salmonWrap" aria-hidden="true">
           <svg class="spark" viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
@@ -480,8 +407,7 @@
       </div>
     </main>
 
-    <!-- GUIDE -->
-    <main class="panel" id="screenGuide" role="main" aria-label="게임 설명">
+    <main class="panel" id="screenGuide">
       <div class="guideStage">
         <div class="guideTop">
           <button class="btnGhost" id="btnGuideBack" style="height:46px; border-radius:16px; font-size:15px; width:112px;">돌아가기</button>
@@ -490,35 +416,7 @@
         </div>
 
         <div class="guideCard" id="guideCard">
-          <div class="salmonWrap" aria-hidden="true" style="animation-duration:1.55s;">
-            <svg class="spark" viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
-              <path d="M86 76 l12 -30 l12 30 l30 12 l-30 12 l-12 30 l-12 -30 l-30 -12z" fill="rgba(255,255,255,.70)"/>
-              <path d="M420 78 l9 -22 l9 22 l22 9 l-22 9 l-9 22 l-9 -22 l-22 -9z" fill="rgba(255,255,255,.55)"/>
-              <path d="M452 238 l7 -18 l7 18 l18 7 l-18 7 l-7 18 l-7 -18 l-18 -7z" fill="rgba(255,255,255,.45)"/>
-            </svg>
-            <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="gBodyG" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="rgba(255,255,255,.95)"/>
-                  <stop offset="1" stop-color="rgba(255,255,255,.55)"/>
-                </linearGradient>
-                <linearGradient id="gFinG" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="rgba(255,255,255,.78)"/>
-                  <stop offset="1" stop-color="rgba(255,255,255,.38)"/>
-                </linearGradient>
-              </defs>
-              <path d="M418 168 C470 126, 502 148, 492 190 C502 232, 470 254, 418 212 Z" fill="url(#gFinG)" opacity=".88"/>
-              <path d="M110 160 C135 92, 220 66, 300 86 C360 102, 410 132, 418 168 C410 210, 360 238, 300 254 C220 274, 135 248, 110 160 Z" fill="url(#gBodyG)"/>
-              <path d="M110 160 C74 150, 62 130, 72 116 C84 100, 104 104, 118 118 Z" fill="url(#gFinG)" opacity=".92"/>
-              <path d="M180 115 C222 92, 280 88, 338 106" stroke="rgba(0,0,0,.20)" stroke-width="10" stroke-linecap="round" opacity=".33"/>
-              <path d="M176 160 C236 138, 308 138, 366 160" stroke="rgba(0,0,0,.18)" stroke-width="10" stroke-linecap="round" opacity=".30"/>
-              <path d="M182 205 C222 228, 280 232, 338 214" stroke="rgba(0,0,0,.16)" stroke-width="10" stroke-linecap="round" opacity=".27"/>
-              <path d="M262 178 C278 156, 320 156, 334 180 C308 200, 282 202, 262 178 Z" fill="url(#gFinG)" opacity=".92"/>
-              <circle cx="118" cy="145" r="9" fill="rgba(0,0,0,.55)"/>
-              <circle cx="115" cy="142" r="3.5" fill="rgba(255,255,255,.78)"/>
-              <path d="M100 172 C112 182, 128 182, 140 172" stroke="rgba(0,0,0,.35)" stroke-width="7" stroke-linecap="round" fill="none" opacity=".6"/>
-            </svg>
-          </div>
+          <div class="salmonWrap missionMedia" id="missionIconGuide" aria-hidden="true" style="animation-duration:1.55s;"></div>
           <div class="bigName" id="guideName">만나서 반가워</div>
         </div>
 
@@ -529,39 +427,9 @@
       </div>
     </main>
 
-    <!-- GAME -->
-    <main class="panel" id="screenGame" role="main" aria-label="게임 화면">
+    <main class="panel" id="screenGame">
       <div class="gameStage">
-        <div class="salmonWrap" aria-hidden="true">
-          <svg class="spark" viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
-            <path d="M86 76 l12 -30 l12 30 l30 12 l-30 12 l-12 30 l-12 -30 l-30 -12z" fill="rgba(255,255,255,.70)"/>
-            <path d="M420 78 l9 -22 l9 22 l22 9 l-22 9 l-9 22 l-9 -22 l-22 -9z" fill="rgba(255,255,255,.55)"/>
-            <path d="M452 238 l7 -18 l7 18 l18 7 l-18 7 l-7 18 l-7 -18 l-18 -7z" fill="rgba(255,255,255,.45)"/>
-          </svg>
-          <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="gBody" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="rgba(255,255,255,.95)"/>
-                <stop offset="1" stop-color="rgba(255,255,255,.55)"/>
-              </linearGradient>
-              <linearGradient id="gFin" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="rgba(255,255,255,.78)"/>
-                <stop offset="1" stop-color="rgba(255,255,255,.38)"/>
-              </linearGradient>
-            </defs>
-            <path d="M418 168 C470 126, 502 148, 492 190 C502 232, 470 254, 418 212 Z" fill="url(#gFin)" opacity=".88"/>
-            <path d="M110 160 C135 92, 220 66, 300 86 C360 102, 410 132, 418 168 C410 210, 360 238, 300 254 C220 274, 135 248, 110 160 Z" fill="url(#gBody)"/>
-            <path d="M110 160 C74 150, 62 130, 72 116 C84 100, 104 104, 118 118 Z" fill="url(#gFin)" opacity=".92"/>
-            <path d="M180 115 C222 92, 280 88, 338 106" stroke="rgba(0,0,0,.20)" stroke-width="10" stroke-linecap="round" opacity=".33"/>
-            <path d="M176 160 C236 138, 308 138, 366 160" stroke="rgba(0,0,0,.18)" stroke-width="10" stroke-linecap="round" opacity=".30"/>
-            <path d="M182 205 C222 228, 280 232, 338 214" stroke="rgba(0,0,0,.16)" stroke-width="10" stroke-linecap="round" opacity=".27"/>
-            <path d="M262 178 C278 156, 320 156, 334 180 C308 200, 282 202, 262 178 Z" fill="url(#gFin)" opacity=".92"/>
-            <circle cx="118" cy="145" r="9" fill="rgba(0,0,0,.55)"/>
-            <circle cx="115" cy="142" r="3.5" fill="rgba(255,255,255,.78)"/>
-            <path d="M100 172 C112 182, 128 182, 140 172" stroke="rgba(0,0,0,.35)" stroke-width="7" stroke-linecap="round" fill="none" opacity=".6"/>
-          </svg>
-        </div>
-
+        <div class="salmonWrap missionMedia" id="missionIconGame" aria-hidden="true"></div>
         <div class="bigName" id="cardName">하이파이브</div>
       </div>
 
@@ -571,6 +439,7 @@
             <path d="M26 43 L14 31 a3 3 0 0 1 4-4 l8 8 20-20 a3 3 0 0 1 4 4 L30 43 a3 3 0 0 1-4 0Z" fill="rgba(8,16,31,.85)"/>
           </svg>
           <div>미션 완료</div>
+          <div class="lockHint" id="lockHint" style="display:none;">2</div>
         </button>
 
         <button class="squareBtn btnPassSquare" id="btnPass" aria-label="패스">
@@ -580,10 +449,6 @@
           </svg>
           <div>패스</div>
         </button>
-      </div>
-
-      <div class="resetRow">
-        <button class="btnReset" id="btnReset" aria-label="첫 화면으로">첫 화면으로</button>
       </div>
 
       <div class="overlay" id="overlayWin" aria-hidden="true">
@@ -598,7 +463,41 @@
     </main>
   </div>
 
+  <!-- Settings Overlay -->
+  <div class="overlay" id="overlaySettings" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="게임 설정">
+      <div class="modalTitleRow">
+        <div class="modalTitle">게임 설정</div>
+        <button class="miniBtn" id="btnSettingsClose">닫기</button>
+      </div>
+
+      <div class="row" style="align-items:center;">
+        <div class="rowLeft" style="gap:12px;">
+          <div style="font-weight:950; letter-spacing:-.03em;">미션당 장수</div>
+        </div>
+        <div class="stepper" aria-label="미션당 장수 조절">
+          <button type="button" id="btnCountDown" aria-label="감소">−</button>
+          <div class="stepperVal" id="countPerMissionLabel">3</div>
+          <button type="button" id="btnCountUp" aria-label="증가">+</button>
+        </div>
+      </div>
+
+      <div class="hint">
+        체크한 미션만 덱에 들어가고, <b>각 미션은 “미션당 장수”만큼</b> 들어가요.<br/>
+        기본값: 6개 미션만 ON (가위바위보/사랑해는 OFF)
+      </div>
+
+      <div id="missionList"></div>
+
+      <div class="actionsBar">
+        <button class="btnGhost" id="btnSettingsReset">기본값</button>
+        <button class="btnPrimary" id="btnSettingsSave">저장</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    /* THEME */
     const THEMES = [
       { accent:"#34d399", accent2:"#60a5fa", accent3:"#fb7185", bgA:"#071b18", bgB:"#07101f" },
       { accent:"#fb7185", accent2:"#f472b6", accent3:"#60a5fa", bgA:"#1a0a16", bgB:"#0b1020" },
@@ -621,52 +520,6 @@
       { accent:"#a78bfa", accent2:"#c084fc", accent3:"#67e8f9", bgA:"#0f071a", bgB:"#0b1020" },
       { accent:"#06b6d4", accent2:"#60a5fa", accent3:"#f59e0b", bgA:"#07101f", bgB:"#0b1020" },
     ];
-
-    const MISSIONS = [
-      { name: "만나서 반가워" },
-      { name: "우리는 친구" },
-      { name: "하이파이브" },
-      { name: "자리바꾸기" },
-      { name: "하나둘셋 화이팅" },
-      { name: "친구야 건배!" },
-    ];
-
-    const $ = (id) => document.getElementById(id);
-
-    // screens
-    const screenHome  = $("screenHome");
-    const screenGuide = $("screenGuide");
-    const screenGame  = $("screenGame");
-
-    // header counter
-    const counterTop = $("counterTop");
-
-    // home buttons
-    const btnStart = $("btnStart");
-    const btnGuide = $("btnGuide");
-
-    // guide
-    const btnGuideBack = $("btnGuideBack");
-    const btnPrev = $("btnPrev");
-    const btnNext = $("btnNext");
-    const guideName = $("guideName");
-    const dotRow = $("dotRow");
-    const guideCard = $("guideCard");
-
-    // game
-    const cardNameEl = $("cardName");
-    const overlayWin = $("overlayWin");
-    const srLive = $("srLive");
-    const btnClear = $("btnClear");
-    const btnPass  = $("btnPass");
-    const btnReset = $("btnReset");
-    const btnToHome2 = $("btnToHome2");
-
-    // state
-    let deck = [];
-    let total = 0;
-    let guideIndex = 0;
-
     function pickTheme(){
       const t = THEMES[Math.floor(Math.random() * THEMES.length)];
       document.documentElement.style.setProperty("--accent", t.accent);
@@ -674,10 +527,324 @@
       document.documentElement.style.setProperty("--accent3", t.accent3);
       document.documentElement.style.setProperty("--bgA", t.bgA);
       document.documentElement.style.setProperty("--bgB", t.bgB);
-
       const meta = document.querySelector('meta[name="theme-color"]');
       if (meta) meta.setAttribute("content", t.bgA);
     }
+
+    /* PNG URLS */
+    const PNG_URLS = {
+      "친구야 건배!": "https://cdn-icons-png.flaticon.com/256/5839/5839243.png",
+      "만나서 반가워": "https://cdn-icons-png.flaticon.com/256/10726/10726813.png",
+      "우리는 친구": "https://cdn-icons-png.flaticon.com/256/6995/6995810.png",
+      "하이파이브": "https://cdn-icons-png.flaticon.com/256/9598/9598926.png",
+      "하나!둘!셋! 화이팅": "https://cdn-icons-png.flaticon.com/256/6183/6183121.png",
+      "자리바꾸기": "https://cdn-icons-png.flaticon.com/256/4442/4442765.png",
+      "가위!바위!보": "https://cdn-icons-png.flaticon.com/256/9695/9695725.png",
+      "사랑해 친구야": "https://cdn-icons-png.flaticon.com/256/9254/9254305.png",
+    };
+
+    const ALL_MISSIONS = [
+      { name:"만나서 반가워", defaultOn:true },
+      { name:"우리는 친구", defaultOn:true },
+      { name:"하이파이브", defaultOn:true },
+      { name:"자리바꾸기", defaultOn:true },
+      { name:"하나!둘!셋! 화이팅", defaultOn:true },
+      { name:"친구야 건배!", defaultOn:true },
+      { name:"가위!바위!보", defaultOn:false },
+      { name:"사랑해 친구야", defaultOn:false },
+    ];
+
+    /* SVG fallback */
+    function iconSvgFor(missionName){
+      const a2 = getComputedStyle(document.documentElement).getPropertyValue("--accent2").trim() || "#60a5fa";
+      const a3 = getComputedStyle(document.documentElement).getPropertyValue("--accent3").trim() || "#fb7185";
+      const defs = `
+        <defs>
+          <radialGradient id="bg" cx="32%" cy="22%" r="90%">
+            <stop offset="0" stop-color="rgba(255,255,255,.98)"/>
+            <stop offset="1" stop-color="rgba(255,255,255,.62)"/>
+          </radialGradient>
+          <linearGradient id="hl" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="${a2}"/>
+            <stop offset="1" stop-color="${a3}"/>
+          </linearGradient>
+          <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="14" stdDeviation="10" flood-color="rgba(0,0,0,.28)"/>
+          </filter>
+        </defs>
+      `;
+      const spark = `
+        <path d="M86 76 l12 -30 l12 30 l30 12 l-30 12 l-12 30 l-12 -30 l-30 -12z" fill="rgba(255,255,255,.30)"/>
+        <path d="M420 78 l9 -22 l9 22 l22 9 l-22 9 l-9 22 l-9 -22 l-22 -9z" fill="rgba(255,255,255,.22)"/>
+        <path d="M452 238 l7 -18 l7 18 l18 7 l-18 7 l-7 18 l-7 -18 l-18 -7z" fill="rgba(255,255,255,.18)"/>
+      `;
+      const outline = 'rgba(0,0,0,.20)';
+
+      const rectHand = (x,y,w,h,rx,rot=0) => `
+        <g transform="translate(${x} ${y}) rotate(${rot})">
+          <rect x="0" y="0" width="${w}" height="${h}" rx="${rx}" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+          <path d="M${w*0.12} ${h*0.45} H${w*0.88}" stroke="rgba(0,0,0,.12)" stroke-width="8" stroke-linecap="round"/>
+        </g>
+      `;
+      const palmUp = (x,y,rot=0) => `
+        <g transform="translate(${x} ${y}) rotate(${rot})">
+          <rect x="0" y="0" width="120" height="78" rx="36" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+          <rect x="20" y="10" width="80" height="58" rx="28" fill="rgba(0,0,0,.04)"/>
+          <rect x="16" y="-80" width="26" height="90" rx="13" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+          <rect x="44" y="-92" width="26" height="102" rx="13" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+          <rect x="72" y="-88" width="26" height="98" rx="13" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+          <rect x="100" y="-70" width="26" height="80" rx="13" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+        </g>
+      `;
+      const fist = (x,y,rot=0,flip=false) => `
+        <g transform="translate(${x} ${y}) rotate(${rot}) scale(${flip?-1:1} 1)">
+          <rect x="0" y="0" width="170" height="110" rx="54" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+          <path d="M26 46 H144" stroke="rgba(0,0,0,.12)" stroke-width="10" stroke-linecap="round"/>
+          <path d="M44 22 V88" stroke="rgba(0,0,0,.10)" stroke-width="8" stroke-linecap="round"/>
+          <path d="M78 18 V92" stroke="rgba(0,0,0,.10)" stroke-width="8" stroke-linecap="round"/>
+          <path d="M112 22 V88" stroke="rgba(0,0,0,.10)" stroke-width="8" stroke-linecap="round"/>
+        </g>
+      `;
+      const burst = (cx,cy,r=26) => `
+        <g>
+          <path d="M${cx-r} ${cy} L${cx+r} ${cy}" stroke="url(#hl)" stroke-width="18" stroke-linecap="round"/>
+          <path d="M${cx} ${cy-r} L${cx} ${cy+r}" stroke="url(#hl)" stroke-width="18" stroke-linecap="round"/>
+          <path d="M${cx-r*0.72} ${cy-r*0.72} L${cx+r*0.72} ${cy+r*0.72}" stroke="rgba(255,255,255,.55)" stroke-width="10" stroke-linecap="round"/>
+          <path d="M${cx+r*0.72} ${cy-r*0.72} L${cx-r*0.72} ${cy+r*0.72}" stroke="rgba(255,255,255,.55)" stroke-width="10" stroke-linecap="round"/>
+        </g>
+      `;
+
+      if (missionName === "만나서 반가워"){
+        return `
+          <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
+            ${defs}${spark}
+            <g filter="url(#shadow)">
+              ${rectHand(88,146,180,84,42,-10)}
+              ${rectHand(252,146,180,84,42,10)}
+              ${burst(260,188,22)}
+              <g font-family="Pretendard Variable, Pretendard, system-ui, sans-serif" font-weight="950" font-size="22" fill="rgba(255,255,255,.70)">
+                <text x="230" y="130">1</text><text x="255" y="120">2</text><text x="282" y="130">3</text>
+              </g>
+            </g>
+          </svg>
+        `;
+      }
+      if (missionName === "우리는 친구"){
+        return `
+          <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
+            ${defs}${spark}
+            <g filter="url(#shadow)">
+              ${fist(78,154,-10,false)}
+              ${fist(272,154,10,true)}
+              ${burst(260,206,26)}
+            </g>
+          </svg>
+        `;
+      }
+      if (missionName === "하이파이브"){
+        return `
+          <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
+            ${defs}${spark}
+            <g filter="url(#shadow)">
+              ${palmUp(140,226,-14)}
+              ${palmUp(270,226,14)}
+              ${burst(260,132,28)}
+            </g>
+          </svg>
+        `;
+      }
+      if (missionName === "자리바꾸기"){
+        return `
+          <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
+            ${defs}${spark}
+            <g filter="url(#shadow)">
+              <g transform="translate(128 110)">
+                <rect x="0" y="0" width="120" height="86" rx="26" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+                <rect x="14" y="78" width="92" height="56" rx="18" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+                <path d="M20 136 V176" stroke="rgba(0,0,0,.14)" stroke-width="10" stroke-linecap="round"/>
+                <path d="M100 136 V176" stroke="rgba(0,0,0,.14)" stroke-width="10" stroke-linecap="round"/>
+              </g>
+              <g transform="translate(272 110)">
+                <rect x="0" y="0" width="120" height="86" rx="26" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+                <rect x="14" y="78" width="92" height="56" rx="18" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+                <path d="M20 136 V176" stroke="rgba(0,0,0,.14)" stroke-width="10" stroke-linecap="round"/>
+                <path d="M100 136 V176" stroke="rgba(0,0,0,.14)" stroke-width="10" stroke-linecap="round"/>
+              </g>
+              <path d="M180 78 H340" stroke="url(#hl)" stroke-width="18" stroke-linecap="round"/>
+              <path d="M326 58 L356 78 L326 98" fill="none" stroke="url(#hl)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M340 258 H180" stroke="url(#hl)" stroke-width="18" stroke-linecap="round"/>
+              <path d="M194 238 L164 258 L194 278" fill="none" stroke="url(#hl)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+          </svg>
+        `;
+      }
+      if (missionName === "하나!둘!셋! 화이팅"){
+        return `
+          <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
+            ${defs}${spark}
+            <g filter="url(#shadow)">
+              <g transform="translate(86 184)">
+                ${rectHand(0,76,90,54,26,-18)}
+                ${rectHand(70,54,92,56,26,-10)}
+                ${rectHand(152,34,96,60,28,0)}
+                ${rectHand(248,54,92,56,26,10)}
+                ${rectHand(318,76,90,54,26,18)}
+              </g>
+              <path d="M260 210 V110" stroke="url(#hl)" stroke-width="16" stroke-linecap="round"/>
+              <path d="M240 130 L260 110 L280 130" fill="none" stroke="url(#hl)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+              <g transform="translate(140 52)">
+                <rect x="0" y="0" width="240" height="66" rx="28" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.18)"/>
+                <text x="120" y="44" text-anchor="middle"
+                      font-family="Pretendard Variable, Pretendard, system-ui, sans-serif"
+                      font-size="28" font-weight="950" letter-spacing="-0.5"
+                      fill="url(#hl)">FIGHTING</text>
+              </g>
+            </g>
+          </svg>
+        `;
+      }
+      if (missionName === "친구야 건배!"){
+        return `
+          <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
+            ${defs}${spark}
+            <g filter="url(#shadow)">
+              <g transform="translate(132 70) rotate(-10 0 0)">
+                <path d="M0 0 H150 L122 118 a40 40 0 0 1-94 0 Z" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+                <rect x="62" y="118" width="26" height="92" rx="13" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+                <rect x="44" y="204" width="62" height="24" rx="12" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+              </g>
+              <g transform="translate(262 70) rotate(10 0 0)">
+                <path d="M0 0 H150 L122 118 a40 40 0 0 1-94 0 Z" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+                <rect x="62" y="118" width="26" height="92" rx="13" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+                <rect x="44" y="204" width="62" height="24" rx="12" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
+              </g>
+              ${burst(260,138,26)}
+            </g>
+          </svg>
+        `;
+      }
+
+      return `
+        <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
+          ${defs}${spark}
+          <g filter="url(#shadow)">
+            <circle cx="260" cy="160" r="110" fill="rgba(255,255,255,.12)"/>
+            <path d="M200 160 H320" stroke="url(#hl)" stroke-width="18" stroke-linecap="round"/>
+            <path d="M260 100 V220" stroke="rgba(255,255,255,.40)" stroke-width="12" stroke-linecap="round"/>
+          </g>
+        </svg>
+      `;
+    }
+
+    function renderMissionMedia(container, missionName){
+      container.innerHTML = "";
+      container.classList.add("missionMedia");
+
+      const url = PNG_URLS[missionName];
+      if (!url){
+        container.innerHTML = iconSvgFor(missionName);
+        return;
+      }
+
+      const img = new Image();
+      img.alt = "";
+      img.decoding = "async";
+      img.loading = "eager";
+      img.src = url;
+
+      img.onload = () => {
+        container.innerHTML = "";
+        container.appendChild(img);
+      };
+      img.onerror = () => {
+        container.innerHTML = iconSvgFor(missionName);
+      };
+
+      container.appendChild(img);
+    }
+
+    /* Settings state */
+    const STORE_KEY = "salmon_happy_settings_v1";
+    function defaultSettings(){
+      return {
+        countPerMission: 3,
+        enabled: Object.fromEntries(ALL_MISSIONS.map(m => [m.name, !!m.defaultOn]))
+      };
+    }
+    function clampInt(v, min, max){
+      const n = parseInt(v, 10);
+      if (Number.isNaN(n)) return min;
+      return Math.max(min, Math.min(max, n));
+    }
+    function loadSettings(){
+      try{
+        const raw = localStorage.getItem(STORE_KEY);
+        if (!raw) return defaultSettings();
+        const parsed = JSON.parse(raw);
+        const d = defaultSettings();
+        return {
+          countPerMission: clampInt(parsed.countPerMission ?? d.countPerMission, 1, 8),
+          enabled: { ...d.enabled, ...(parsed.enabled || {}) }
+        };
+      }catch{
+        return defaultSettings();
+      }
+    }
+    function saveSettings(s){
+      localStorage.setItem(STORE_KEY, JSON.stringify(s));
+    }
+    let settings = loadSettings();
+
+    /* Core game */
+    const $ = (id) => document.getElementById(id);
+
+    const screenHome  = $("screenHome");
+    const screenGuide = $("screenGuide");
+    const screenGame  = $("screenGame");
+
+    const counterTop = $("counterTop");
+
+    const btnStart = $("btnStart");
+    const btnGuide = $("btnGuide");
+
+    const btnGuideBack = $("btnGuideBack");
+    const btnPrev = $("btnPrev");
+    const btnNext = $("btnNext");
+    const guideName = $("guideName");
+    const dotRow = $("dotRow");
+    const guideCard = $("guideCard");
+    const missionIconGuide = $("missionIconGuide");
+
+    const cardNameEl = $("cardName");
+    const missionIconGame = $("missionIconGame");
+    const overlayWin = $("overlayWin");
+    const srLive = $("srLive");
+    const btnClear = $("btnClear");
+    const btnPass  = $("btnPass");
+    const btnToHome2 = $("btnToHome2");
+    const lockHint = $("lockHint");
+
+    const btnSettings = $("btnSettings");
+    const btnExit = $("btnExit");
+    const overlaySettings = $("overlaySettings");
+    const btnSettingsClose = $("btnSettingsClose");
+    const btnSettingsSave = $("btnSettingsSave");
+    const btnSettingsReset = $("btnSettingsReset");
+    const missionList = $("missionList");
+    const countPerMissionLabel = $("countPerMissionLabel");
+    const btnCountDown = $("btnCountDown");
+    const btnCountUp = $("btnCountUp");
+
+    let deck = [];
+    let total = 0;
+
+    const GUIDE_MISSIONS = ALL_MISSIONS.map(m => ({ name: m.name }));
+    let guideIndex = 0;
+
+    const CLEAR_LOCK_SECONDS = 2;
+    let clearLocked = false;
+    let lockTimer = null;
+    let lockTick = null;
 
     function shuffle(arr){
       const a = arr.slice();
@@ -688,11 +855,21 @@
       return a;
     }
 
+    function enabledMissionNames(){
+      return ALL_MISSIONS
+        .map(m => m.name)
+        .filter(name => settings.enabled[name]);
+    }
+
     function buildDeck(){
+      const enabled = enabledMissionNames();
+      const list = enabled.length ? enabled : ALL_MISSIONS.filter(m=>m.defaultOn).map(m=>m.name);
+
       const d = [];
-      for (const m of MISSIONS){
-        for (let i = 0; i < 3; i++){
-          d.push({ name: m.name, id: m.name + "_" + i });
+      const c = clampInt(settings.countPerMission, 1, 8);
+      for (const name of list){
+        for (let i=0;i<c;i++){
+          d.push({ name, id: name + "_" + i });
         }
       }
       return shuffle(d);
@@ -714,158 +891,286 @@
       counterTop.textContent = `(${current}/${total})`;
     }
 
+    function setHeaderButtons(which){
+      // Home: settings ON, exit OFF
+      // Guide: both OFF
+      // Game: settings OFF, exit ON
+      if (which === screenHome){
+        btnSettings.style.display = "inline-flex";
+        btnExit.style.display = "none";
+      } else if (which === screenGame){
+        btnSettings.style.display = "none";
+        btnExit.style.display = "inline-flex";
+      } else {
+        btnSettings.style.display = "none";
+        btnExit.style.display = "none";
+      }
+    }
+
     function showScreen(which){
       screenHome.classList.remove("on");
       screenGuide.classList.remove("on");
       screenGame.classList.remove("on");
       which.classList.add("on");
 
-      // show counter only on game screen
       setCounterVisible(which === screenGame);
+      setHeaderButtons(which);
 
-      // close overlay when switching
       overlayWin.classList.remove("on");
       overlayWin.setAttribute("aria-hidden", "true");
     }
 
-    // Guide dots
     function buildDots(){
       dotRow.innerHTML = "";
-      for (let i=0;i<MISSIONS.length;i++){
+      for (let i=0;i<GUIDE_MISSIONS.length;i++){
         const d = document.createElement("div");
         d.className = "dot" + (i===guideIndex ? " on" : "");
         dotRow.appendChild(d);
       }
     }
+
     function renderGuide(){
       buildDots();
+      const name = GUIDE_MISSIONS[guideIndex].name;
+      renderMissionMedia(missionIconGuide, name);
+
       guideName.classList.remove("pop");
       void guideName.offsetWidth;
       guideName.classList.add("pop");
-      guideName.textContent = MISSIONS[guideIndex].name;
+      guideName.textContent = name;
     }
 
-    // Guide swipe left/right
     let gsx=0,gsy=0,gtouch=false;
-    guideCard.addEventListener("touchstart", (e)=>{
+    guideCard.addEventListener("touchstart",(e)=>{
       if(!e.touches?.length) return;
-      gtouch=true;
-      gsx=e.touches[0].clientX;
-      gsy=e.touches[0].clientY;
-    }, {passive:true});
+      gtouch=true; gsx=e.touches[0].clientX; gsy=e.touches[0].clientY;
+    },{passive:true});
     guideCard.addEventListener("touchend",(e)=>{
-      if(!gtouch) return;
-      gtouch=false;
-      const t=e.changedTouches?.[0];
-      if(!t) return;
-      const dx=t.clientX-gsx;
-      const dy=t.clientY-gsy;
-      if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy)){
-        if (dx < 0) nextGuide();
-        else prevGuide();
+      if(!gtouch) return; gtouch=false;
+      const t=e.changedTouches?.[0]; if(!t) return;
+      const dx=t.clientX-gsx, dy=t.clientY-gsy;
+      if (Math.abs(dx)>70 && Math.abs(dx)>Math.abs(dy)){
+        if(dx<0) nextGuide(); else prevGuide();
       }
-    }, {passive:true});
+    },{passive:true});
 
-    function nextGuide(){
-      guideIndex = (guideIndex + 1) % MISSIONS.length;
-      renderGuide();
-    }
-    function prevGuide(){
-      guideIndex = (guideIndex - 1 + MISSIONS.length) % MISSIONS.length;
-      renderGuide();
+    function nextGuide(){ guideIndex=(guideIndex+1)%GUIDE_MISSIONS.length; renderGuide(); }
+    function prevGuide(){ guideIndex=(guideIndex-1+GUIDE_MISSIONS.length)%GUIDE_MISSIONS.length; renderGuide(); }
+
+    function stopLockTimers(){
+      if (lockTimer){ clearTimeout(lockTimer); lockTimer=null; }
+      if (lockTick){ clearInterval(lockTick); lockTick=null; }
     }
 
-    // Game render
+    function setClearLocked(on){
+      clearLocked = on;
+      btnClear.disabled = on;
+
+      if (on){
+        stopLockTimers();
+        lockHint.style.display = "block";
+        let remaining = CLEAR_LOCK_SECONDS;
+        lockHint.textContent = String(remaining);
+
+        lockTick = setInterval(()=>{
+          remaining -= 1;
+          if (remaining <= 0){
+            stopLockTimers();
+            setClearLocked(false);
+          } else {
+            lockHint.textContent = String(remaining);
+          }
+        }, 1000);
+
+        lockTimer = setTimeout(()=>{
+          stopLockTimers();
+          setClearLocked(false);
+        }, CLEAR_LOCK_SECONDS*1000 + 150);
+      } else {
+        stopLockTimers();
+        lockHint.style.display = "none";
+      }
+    }
+
     function renderGame(){
       if (deck.length === 0){
         overlayWin.classList.add("on");
-        overlayWin.setAttribute("aria-hidden", "false");
+        overlayWin.setAttribute("aria-hidden","false");
         cardNameEl.textContent = "";
+        if (missionIconGame) missionIconGame.innerHTML = "";
         updateCounter();
         announce("게임 종료");
+        setClearLocked(false);
         return;
       }
-
       overlayWin.classList.remove("on");
-      overlayWin.setAttribute("aria-hidden", "true");
+      overlayWin.setAttribute("aria-hidden","true");
 
       cardNameEl.classList.remove("pop");
       void cardNameEl.offsetWidth;
       cardNameEl.classList.add("pop");
 
-      cardNameEl.textContent = deck[0].name;
+      const name = deck[0].name;
+      cardNameEl.textContent = name;
+      renderMissionMedia(missionIconGame, name);
+
       updateCounter();
-      announce(deck[0].name);
+      announce(name);
+      setClearLocked(true);
     }
 
     function clearCard(){
-      if (deck.length === 0) return;
+      if (deck.length===0) return;
+      if (clearLocked) return;
       deck.shift();
       renderGame();
     }
+
     function passCard(){
-      if (deck.length === 0) return;
+      if (deck.length===0) return;
       deck.push(deck.shift());
       renderGame();
     }
 
     function startGame(){
       deck = buildDeck();
-      total = deck.length; // 18
+      total = deck.length;
       updateCounter();
       renderGame();
       showScreen(screenGame);
     }
 
     function toHome(){
+      setClearLocked(false);
       showScreen(screenHome);
     }
 
-    // Home actions
+    /* Settings UI */
+    function openSettings(){
+      overlaySettings.classList.add("on");
+      overlaySettings.setAttribute("aria-hidden","false");
+      renderSettingsUI();
+    }
+    function closeSettings(){
+      overlaySettings.classList.remove("on");
+      overlaySettings.setAttribute("aria-hidden","true");
+    }
+    function renderSettingsUI(){
+      countPerMissionLabel.textContent = String(settings.countPerMission);
+
+      missionList.innerHTML = "";
+      for (const m of ALL_MISSIONS){
+        const row = document.createElement("div");
+        row.className = "row";
+
+        const left = document.createElement("div");
+        left.className = "rowLeft";
+
+        const label = document.createElement("label");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = !!settings.enabled[m.name];
+        checkbox.addEventListener("change", () => {
+          settings.enabled[m.name] = checkbox.checked;
+        });
+
+        const thumb = document.createElement("div");
+        thumb.className = "thumb";
+
+        const url = PNG_URLS[m.name];
+        if (url){
+          const img = new Image();
+          img.alt = "";
+          img.decoding = "async";
+          img.loading = "lazy";
+          img.src = url;
+          img.onerror = () => { thumb.innerHTML = iconSvgFor(m.name); };
+          thumb.appendChild(img);
+        } else {
+          thumb.innerHTML = iconSvgFor(m.name);
+        }
+
+        const text = document.createElement("div");
+        text.className = "missionLabel";
+        text.textContent = m.name;
+
+        label.appendChild(checkbox);
+        label.appendChild(thumb);
+        label.appendChild(text);
+
+        left.appendChild(label);
+        row.appendChild(left);
+        missionList.appendChild(row);
+      }
+    }
+    function resetSettings(){
+      settings = defaultSettings();
+      renderSettingsUI();
+    }
+
+    /* Bindings */
     btnStart.addEventListener("click", startGame);
     btnGuide.addEventListener("click", ()=>{
-      guideIndex = 0;
-      renderGuide();
-      showScreen(screenGuide);
+      guideIndex=0; renderGuide(); showScreen(screenGuide);
     });
 
-    // Guide actions
     btnGuideBack.addEventListener("click", toHome);
     btnPrev.addEventListener("click", prevGuide);
     btnNext.addEventListener("click", nextGuide);
 
-    // Game actions
     btnClear.addEventListener("click", clearCard);
     btnPass.addEventListener("click", passCard);
-    btnReset.addEventListener("click", toHome);
     btnToHome2.addEventListener("click", toHome);
 
-    // Game gestures (silent): swipe up = clear, swipe left = pass
-    let sx=0, sy=0, touching=false;
-    screenGame.addEventListener("touchstart", (e) => {
-      if (!e.touches?.length) return;
-      touching = true;
-      sx = e.touches[0].clientX;
-      sy = e.touches[0].clientY;
-    }, { passive:true });
+    // 종료 버튼(게임에서만 보임)
+    btnExit.addEventListener("click", toHome);
 
-    screenGame.addEventListener("touchend", (e) => {
-      if (!touching) return;
-      touching = false;
-      const t = e.changedTouches?.[0];
-      if (!t) return;
+    // settings open/close (홈에서만 보임)
+    btnSettings.addEventListener("click", openSettings);
+    btnSettingsClose.addEventListener("click", closeSettings);
+    overlaySettings.addEventListener("click", (e)=>{
+      if (e.target === overlaySettings) closeSettings();
+    });
 
-      const dx = t.clientX - sx;
-      const dy = t.clientY - sy;
+    btnCountDown.addEventListener("click", ()=>{
+      settings.countPerMission = clampInt(settings.countPerMission - 1, 1, 8);
+      countPerMissionLabel.textContent = String(settings.countPerMission);
+    });
+    btnCountUp.addEventListener("click", ()=>{
+      settings.countPerMission = clampInt(settings.countPerMission + 1, 1, 8);
+      countPerMissionLabel.textContent = String(settings.countPerMission);
+    });
 
-      if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy)) {
-        if (dx < 0) passCard();
-      } else if (Math.abs(dy) > 90 && Math.abs(dy) > Math.abs(dx)) {
-        if (dy < 0) clearCard();
+    btnSettingsReset.addEventListener("click", resetSettings);
+    btnSettingsSave.addEventListener("click", ()=>{
+      const anyOn = Object.values(settings.enabled).some(Boolean);
+      if (!anyOn){
+        const d = defaultSettings();
+        settings.enabled = d.enabled;
       }
-    }, { passive:true });
+      saveSettings(settings);
+      closeSettings();
+    });
 
-    // Init
+    // gestures: swipe up = clear, swipe left = pass
+    let sx=0, sy=0, touching=false;
+    screenGame.addEventListener("touchstart",(e)=>{
+      if(!e.touches?.length) return;
+      touching=true; sx=e.touches[0].clientX; sy=e.touches[0].clientY;
+    },{passive:true});
+    screenGame.addEventListener("touchend",(e)=>{
+      if(!touching) return; touching=false;
+      const t=e.changedTouches?.[0]; if(!t) return;
+      const dx=t.clientX-sx, dy=t.clientY-sy;
+      if (Math.abs(dx)>80 && Math.abs(dx)>Math.abs(dy)){
+        if(dx<0) passCard();
+      } else if (Math.abs(dy)>90 && Math.abs(dy)>Math.abs(dx)){
+        if(dy<0) clearCard();
+      }
+    },{passive:true});
+
+    /* Boot */
     pickTheme();
     showScreen(screenHome);
   </script>
