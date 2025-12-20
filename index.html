@@ -391,7 +391,7 @@
 
       <div class="overlay" id="overlayWin" aria-hidden="true">
         <div class="winBox">
-          <div class="winTitle">1등한 너가 제일 행복해!</div>
+          <div class="winTitle">1등 짜릿해!</div>
           <p class="winSub">끝 🎉</p>
           <button class="btnPrimary" id="btnToHome2" style="width:100%;">첫 화면으로</button>
         </div>
@@ -974,6 +974,24 @@
 
     pickTheme();
     showScreen(screenHome);
+
+    // ✅ iOS Safari 더블탭 확대 방지 (전체 문서 기준)
+(function blockDoubleTapZoom(){
+  let lastTouchEnd = 0;
+
+  document.addEventListener("touchend", function (e) {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      e.preventDefault(); // 더블탭 확대 방지
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+
+  // ✅ 두 손가락 확대(핀치줌)도 막고 싶으면 아래도 같이
+  document.addEventListener("gesturestart", function (e) {
+    e.preventDefault();
+  }, { passive: false });
+})();
   </script>
 </body>
 </html>
