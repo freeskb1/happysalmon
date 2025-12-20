@@ -32,6 +32,13 @@
         linear-gradient(135deg, var(--bgA), var(--bgB));
       overflow:hidden;
     }
+
+    /* ✅ 당김 새로고침/오버스크롤 방지(전체화면/게임 중) */
+    body.lockScroll{
+      overscroll-behavior: none;
+      touch-action: manipulation;
+    }
+
     .wrap{
       height:100%; max-width:560px; margin:0 auto;
       padding:
@@ -41,10 +48,20 @@
         calc(env(safe-area-inset-left) + var(--pad));
       display:flex; flex-direction:column; gap:14px;
     }
-
     header{display:flex; align-items:center; justify-content:space-between; gap:12px;}
-    .brand{display:flex; align-items:center; gap:10px; line-height:1; min-width:0;}
+
+    /* ✅ 좌측 상단(전체화면 토글) */
+    .brand{
+      display:flex; align-items:center; gap:10px; line-height:1; min-width:0;
+      cursor:pointer;
+      padding:6px 6px;
+      border-radius:14px;
+      -webkit-tap-highlight-color: transparent;
+      user-select:none;
+    }
+    .brand:active{filter:brightness(.96); transform:scale(.995);}
     .brand .t{font-weight:950; letter-spacing:-.04em; font-size:18px; white-space:nowrap; opacity:.98;}
+
     .counterBadge{
       display:none;
       font-weight:900; letter-spacing:-.02em; font-size:14px; opacity:.92;
@@ -56,29 +73,25 @@
     }
     .counterBadge.on{display:inline-flex;}
 
-    .hdrRight{display:flex; align-items:center; gap:10px;}
-    .iconBtn{
-      width:42px; height:42px; border-radius:16px;
-      display:inline-flex; align-items:center; justify-content:center;
-      background:rgba(255,255,255,.10);
+    /* ✅ 우측 상단 버튼 영역(홈에서는 숨김, 게임에서 '종료') */
+    .hdrRight{min-width:92px; display:flex; justify-content:flex-end;}
+    .hdrBtn{
+      display:none;
+      height:40px;
+      padding:0 14px;
+      border-radius:14px;
       border:1px solid rgba(255,255,255,.16);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      background:rgba(255,255,255,.10);
+      color:rgba(255,255,255,.95);
+      font-weight:900;
+      font-size:14px;
+      letter-spacing:-.02em;
       cursor:pointer;
       -webkit-tap-highlight-color: transparent;
-      transition: transform .06s ease, filter .12s ease, opacity .12s ease;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     }
-    .iconBtn:active{transform:scale(.985); filter:brightness(.96);}
-    .iconBtn svg{width:22px; height:22px; opacity:.95}
-
-    .exitBtn{
-      width:auto; height:42px;
-      padding:0 14px;
-      font-size:14px;
-      font-weight:950;
-      letter-spacing:-.02em;
-      color:rgba(255,255,255,.95);
-      user-select:none;
-    }
+    .hdrBtn.on{display:inline-flex; align-items:center; justify-content:center;}
+    .hdrBtn:active{transform:scale(.985); filter:brightness(.96);}
 
     .panel{
       flex:1; min-height:420px;
@@ -160,20 +173,29 @@
       transform-origin:50% 70%;
       animation: boing 1.35s ease-in-out infinite;
       margin:0 auto;
-      display:flex; align-items:center; justify-content:center;
     }
     @keyframes boing{0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-10px) scale(1.02)}}
-
-    .missionMedia img{
-      width:100%; height:100%;
-      object-fit:contain;
-      display:block;
-      filter: drop-shadow(0 18px 28px rgba(0,0,0,.30));
-    }
-    #missionIconGuide svg, #missionIconGame svg{width:100%;height:100%;display:block;}
-
     .spark{position:absolute; inset:0; pointer-events:none; opacity:.95; animation:sparkle 1.8s ease-in-out infinite;}
     @keyframes sparkle{0%,100%{transform:translateY(0); opacity:.85} 50%{transform:translateY(-3px); opacity:1}}
+
+    /* Mission icon SVG fills container */
+    #missionIconGuide svg, #missionIconGame svg{
+      width:100%;
+      height:100%;
+      display:block;
+    }
+
+    /* PNG icon style */
+    .missionPng{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+      filter: drop-shadow(0 18px 28px rgba(0,0,0,.25));
+      transform: translateZ(0);
+      user-select:none;
+      -webkit-user-drag:none;
+    }
 
     .bigName{
       position:relative; z-index:1;
@@ -226,6 +248,7 @@
       gap:10px; padding:10px;
     }
     .squareBtn .icon{width:44px; height:44px; filter: drop-shadow(0 12px 18px rgba(0,0,0,.25));}
+
     .btnClearSquare{
       background:linear-gradient(135deg, var(--accent), rgba(255,255,255,.95));
       color:#08101f; box-shadow:0 16px 40px rgba(0,0,0,.22);
@@ -236,6 +259,7 @@
       color:rgba(255,255,255,.95);
       backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     }
+
     .squareBtn[disabled]{cursor:not-allowed; opacity:.72; filter:saturate(.9); transform:none !important;}
     .lockHint{font-size:14px; font-weight:900; letter-spacing:-.02em; opacity:.92;}
 
@@ -247,7 +271,6 @@
       z-index:5;
     }
     .overlay.on{display:flex;}
-
     .winBox{
       width:100%;
       border-radius:24px; border:1px solid rgba(255,255,255,.18);
@@ -259,81 +282,6 @@
     .winTitle{font-weight:980; letter-spacing:-.06em; font-size:clamp(34px,8vw,56px); margin:2px 0 10px;}
     .winSub{margin:0 0 16px; color:rgba(255,255,255,.86); font-weight:720;}
 
-    /* settings modal */
-    .modal{
-      width:100%;
-      border-radius:24px; border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,255,255,.10);
-      box-shadow:var(--shadow);
-      padding:16px 14px 12px;
-      position:relative;
-      max-height: 78vh;
-      overflow:auto;
-    }
-    .modalTitleRow{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px;}
-    .modalTitle{font-weight:950; letter-spacing:-.04em; font-size:18px;}
-    .miniBtn{
-      height:40px; border-radius:14px; padding:0 14px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.16);
-      color:rgba(255,255,255,.95);
-      font-size:15px; font-weight:900;
-    }
-    .row{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:12px 10px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06);
-    }
-    .row + .row{margin-top:10px;}
-    .rowLeft{display:flex; align-items:center; gap:10px; min-width:0;}
-    .rowLeft label{display:flex; align-items:center; gap:10px; cursor:pointer; min-width:0;}
-    .rowLeft input{transform: scale(1.15); accent-color: var(--accent);}
-
-    .thumb{
-      width:44px; height:44px;
-      border-radius:16px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14);
-      display:flex; align-items:center; justify-content:center;
-      overflow:hidden;
-      flex:0 0 auto;
-    }
-    .thumb img{width:100%; height:100%; object-fit:contain; display:block;}
-
-    .missionLabel{
-      font-weight:900; letter-spacing:-.03em;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-      max-width: 220px;
-    }
-
-    .stepper{
-      display:flex; align-items:center; gap:10px; flex:0 0 auto;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.06);
-      border-radius:16px;
-      padding:6px 8px;
-    }
-    .stepper button{
-      width:34px; height:34px; border-radius:12px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14);
-      color:rgba(255,255,255,.95);
-      font-size:18px; font-weight:950;
-    }
-    .stepperVal{min-width:18px; text-align:center; font-weight:950;}
-
-    .hint{
-      margin:10px 2px 12px;
-      color:rgba(255,255,255,.82);
-      font-weight:740; font-size:13px; line-height:1.35;
-    }
-    .actionsBar{
-      display:grid; grid-template-columns:1fr 1fr; gap:10px;
-      margin-top:10px;
-    }
-
     .srOnly{
       position:absolute; width:1px; height:1px; padding:0; margin:-1px;
       overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
@@ -343,22 +291,12 @@
 <body>
   <div class="wrap">
     <header>
-      <div class="brand">
+      <div class="brand" id="btnFullscreen" role="button" aria-label="전체화면 토글">
         <div class="t">연어는 행복해</div>
         <div class="counterBadge" id="counterTop">(1/18)</div>
       </div>
-
       <div class="hdrRight">
-        <!-- 설정: 홈에서만 표시 -->
-        <div class="iconBtn" id="btnSettings" aria-label="설정" style="display:none;">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Zm8.3-2.9-.9-.5.1-1.1.9-.7a1 1 0 0 0 .2-1.3l-1.1-1.9a1 1 0 0 0-1.2-.4l-1 .4-.9-.7-.1-1.1a1 1 0 0 0-.8-1l-2.1-.5a1 1 0 0 0-1.1.6l-.4 1-1.1 0-.7-.9a1 1 0 0 0-1.2-.3l-2 .9a1 1 0 0 0-.6 1.1l.3 1-.8.8-1.1-.1a1 1 0 0 0-1 .8l-.5 2.1a1 1 0 0 0 .6 1.1l1 .4v1.1l-1 .7a1 1 0 0 0-.3 1.2l.9 2a1 1 0 0 0 1.1.6l1-.3.8.8-.1 1.1a1 1 0 0 0 .8 1l2.1.5a1 1 0 0 0 1.1-.6l.4-1h1.1l.7 1a1 1 0 0 0 1.2.3l2-.9a1 1 0 0 0 .6-1.1l-.3-1 .8-.8 1.1.1a1 1 0 0 0 1-.8l.5-2.1a1 1 0 0 0-.6-1.1Z"
-                  fill="rgba(255,255,255,.92)"/>
-          </svg>
-        </div>
-
-        <!-- 종료: 게임에서만 표시 -->
-        <div class="iconBtn exitBtn" id="btnExit" aria-label="종료" style="display:none;">종료</div>
+        <button class="hdrBtn" id="btnExit">종료</button>
       </div>
     </header>
 
@@ -416,7 +354,7 @@
         </div>
 
         <div class="guideCard" id="guideCard">
-          <div class="salmonWrap missionMedia" id="missionIconGuide" aria-hidden="true" style="animation-duration:1.55s;"></div>
+          <div class="salmonWrap" id="missionIconGuide" aria-hidden="true" style="animation-duration:1.55s;"></div>
           <div class="bigName" id="guideName">만나서 반가워</div>
         </div>
 
@@ -429,7 +367,7 @@
 
     <main class="panel" id="screenGame">
       <div class="gameStage">
-        <div class="salmonWrap missionMedia" id="missionIconGame" aria-hidden="true"></div>
+        <div class="salmonWrap" id="missionIconGame" aria-hidden="true"></div>
         <div class="bigName" id="cardName">하이파이브</div>
       </div>
 
@@ -453,7 +391,7 @@
 
       <div class="overlay" id="overlayWin" aria-hidden="true">
         <div class="winBox">
-          <div class="winTitle">연어는 행복해!</div>
+          <div class="winTitle">1등한 너가 제일 행복해!</div>
           <p class="winSub">끝 🎉</p>
           <button class="btnPrimary" id="btnToHome2" style="width:100%;">첫 화면으로</button>
         </div>
@@ -463,41 +401,7 @@
     </main>
   </div>
 
-  <!-- Settings Overlay -->
-  <div class="overlay" id="overlaySettings" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-label="게임 설정">
-      <div class="modalTitleRow">
-        <div class="modalTitle">게임 설정</div>
-        <button class="miniBtn" id="btnSettingsClose">닫기</button>
-      </div>
-
-      <div class="row" style="align-items:center;">
-        <div class="rowLeft" style="gap:12px;">
-          <div style="font-weight:950; letter-spacing:-.03em;">미션당 장수</div>
-        </div>
-        <div class="stepper" aria-label="미션당 장수 조절">
-          <button type="button" id="btnCountDown" aria-label="감소">−</button>
-          <div class="stepperVal" id="countPerMissionLabel">3</div>
-          <button type="button" id="btnCountUp" aria-label="증가">+</button>
-        </div>
-      </div>
-
-      <div class="hint">
-        체크한 미션만 덱에 들어가고, <b>각 미션은 “미션당 장수”만큼</b> 들어가요.<br/>
-        기본값: 6개 미션만 ON (가위바위보/사랑해는 OFF)
-      </div>
-
-      <div id="missionList"></div>
-
-      <div class="actionsBar">
-        <button class="btnGhost" id="btnSettingsReset">기본값</button>
-        <button class="btnPrimary" id="btnSettingsSave">저장</button>
-      </div>
-    </div>
-  </div>
-
   <script>
-    /* THEME */
     const THEMES = [
       { accent:"#34d399", accent2:"#60a5fa", accent3:"#fb7185", bgA:"#071b18", bgB:"#07101f" },
       { accent:"#fb7185", accent2:"#f472b6", accent3:"#60a5fa", bgA:"#1a0a16", bgB:"#0b1020" },
@@ -520,19 +424,18 @@
       { accent:"#a78bfa", accent2:"#c084fc", accent3:"#67e8f9", bgA:"#0f071a", bgB:"#0b1020" },
       { accent:"#06b6d4", accent2:"#60a5fa", accent3:"#f59e0b", bgA:"#07101f", bgB:"#0b1020" },
     ];
-    function pickTheme(){
-      const t = THEMES[Math.floor(Math.random() * THEMES.length)];
-      document.documentElement.style.setProperty("--accent", t.accent);
-      document.documentElement.style.setProperty("--accent2", t.accent2);
-      document.documentElement.style.setProperty("--accent3", t.accent3);
-      document.documentElement.style.setProperty("--bgA", t.bgA);
-      document.documentElement.style.setProperty("--bgB", t.bgB);
-      const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute("content", t.bgA);
-    }
 
-    /* PNG URLS */
-    const PNG_URLS = {
+    const MISSIONS = [
+      { name: "만나서 반가워" },
+      { name: "우리는 친구" },
+      { name: "하이파이브" },
+      { name: "자리바꾸기" },
+      { name: "하나!둘!셋! 화이팅" },
+      { name: "친구야 건배!" },
+    ];
+
+    // ✅ PNG URL 매핑 (링크 깨지면 SVG fallback)
+    const PNG_MAP = {
       "친구야 건배!": "https://cdn-icons-png.flaticon.com/256/5839/5839243.png",
       "만나서 반가워": "https://cdn-icons-png.flaticon.com/256/10726/10726813.png",
       "우리는 친구": "https://cdn-icons-png.flaticon.com/256/6995/6995810.png",
@@ -540,24 +443,14 @@
       "하나!둘!셋! 화이팅": "https://cdn-icons-png.flaticon.com/256/6183/6183121.png",
       "자리바꾸기": "https://cdn-icons-png.flaticon.com/256/4442/4442765.png",
       "가위!바위!보": "https://cdn-icons-png.flaticon.com/256/9695/9695725.png",
-      "사랑해 친구야": "https://cdn-icons-png.flaticon.com/256/9254/9254305.png",
+      "사랑해 친구야": "https://cdn-icons-png.flaticon.com/256/9254/9254305.png"
     };
 
-    const ALL_MISSIONS = [
-      { name:"만나서 반가워", defaultOn:true },
-      { name:"우리는 친구", defaultOn:true },
-      { name:"하이파이브", defaultOn:true },
-      { name:"자리바꾸기", defaultOn:true },
-      { name:"하나!둘!셋! 화이팅", defaultOn:true },
-      { name:"친구야 건배!", defaultOn:true },
-      { name:"가위!바위!보", defaultOn:false },
-      { name:"사랑해 친구야", defaultOn:false },
-    ];
-
-    /* SVG fallback */
     function iconSvgFor(missionName){
+      // V11 SVG (fallback)
       const a2 = getComputedStyle(document.documentElement).getPropertyValue("--accent2").trim() || "#60a5fa";
       const a3 = getComputedStyle(document.documentElement).getPropertyValue("--accent3").trim() || "#fb7185";
+
       const defs = `
         <defs>
           <radialGradient id="bg" cx="32%" cy="22%" r="90%">
@@ -573,11 +466,13 @@
           </filter>
         </defs>
       `;
+
       const spark = `
         <path d="M86 76 l12 -30 l12 30 l30 12 l-30 12 l-12 30 l-12 -30 l-30 -12z" fill="rgba(255,255,255,.30)"/>
         <path d="M420 78 l9 -22 l9 22 l22 9 l-22 9 l-9 22 l-9 -22 l-22 -9z" fill="rgba(255,255,255,.22)"/>
         <path d="M452 238 l7 -18 l7 18 l18 7 l-18 7 l-7 18 l-7 -18 l-18 -7z" fill="rgba(255,255,255,.18)"/>
       `;
+
       const outline = 'rgba(0,0,0,.20)';
 
       const rectHand = (x,y,w,h,rx,rot=0) => `
@@ -586,6 +481,7 @@
           <path d="M${w*0.12} ${h*0.45} H${w*0.88}" stroke="rgba(0,0,0,.12)" stroke-width="8" stroke-linecap="round"/>
         </g>
       `;
+
       const palmUp = (x,y,rot=0) => `
         <g transform="translate(${x} ${y}) rotate(${rot})">
           <rect x="0" y="0" width="120" height="78" rx="36" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
@@ -596,6 +492,7 @@
           <rect x="100" y="-70" width="26" height="80" rx="13" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
         </g>
       `;
+
       const fist = (x,y,rot=0,flip=false) => `
         <g transform="translate(${x} ${y}) rotate(${rot}) scale(${flip?-1:1} 1)">
           <rect x="0" y="0" width="170" height="110" rx="54" fill="url(#bg)" stroke="${outline}" stroke-width="6"/>
@@ -605,6 +502,7 @@
           <path d="M112 22 V88" stroke="rgba(0,0,0,.10)" stroke-width="8" stroke-linecap="round"/>
         </g>
       `;
+
       const burst = (cx,cy,r=26) => `
         <g>
           <path d="M${cx-r} ${cy} L${cx+r} ${cy}" stroke="url(#hl)" stroke-width="18" stroke-linecap="round"/>
@@ -670,6 +568,7 @@
                 <path d="M20 136 V176" stroke="rgba(0,0,0,.14)" stroke-width="10" stroke-linecap="round"/>
                 <path d="M100 136 V176" stroke="rgba(0,0,0,.14)" stroke-width="10" stroke-linecap="round"/>
               </g>
+
               <path d="M180 78 H340" stroke="url(#hl)" stroke-width="18" stroke-linecap="round"/>
               <path d="M326 58 L356 78 L326 98" fill="none" stroke="url(#hl)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M340 258 H180" stroke="url(#hl)" stroke-width="18" stroke-linecap="round"/>
@@ -728,74 +627,40 @@
         <svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg">
           ${defs}${spark}
           <g filter="url(#shadow)">
-            <circle cx="260" cy="160" r="110" fill="rgba(255,255,255,.12)"/>
-            <path d="M200 160 H320" stroke="url(#hl)" stroke-width="18" stroke-linecap="round"/>
-            <path d="M260 100 V220" stroke="rgba(255,255,255,.40)" stroke-width="12" stroke-linecap="round"/>
+            <circle cx="260" cy="160" r="100" fill="rgba(255,255,255,.12)"/>
           </g>
         </svg>
       `;
     }
 
-    function renderMissionMedia(container, missionName){
-      container.innerHTML = "";
-      container.classList.add("missionMedia");
+    function renderMissionIcon(targetEl, missionName){
+      if (!targetEl) return;
 
-      const url = PNG_URLS[missionName];
+      // 먼저 비우기
+      targetEl.innerHTML = "";
+
+      const url = PNG_MAP[missionName];
       if (!url){
-        container.innerHTML = iconSvgFor(missionName);
+        targetEl.innerHTML = iconSvgFor(missionName);
         return;
       }
 
       const img = new Image();
-      img.alt = "";
+      img.className = "missionPng";
+      img.alt = missionName;
       img.decoding = "async";
       img.loading = "eager";
+      img.referrerPolicy = "no-referrer";
       img.src = url;
 
-      img.onload = () => {
-        container.innerHTML = "";
-        container.appendChild(img);
-      };
       img.onerror = () => {
-        container.innerHTML = iconSvgFor(missionName);
+        targetEl.innerHTML = iconSvgFor(missionName);
       };
 
-      container.appendChild(img);
+      targetEl.appendChild(img);
     }
 
-    /* Settings state */
-    const STORE_KEY = "salmon_happy_settings_v1";
-    function defaultSettings(){
-      return {
-        countPerMission: 3,
-        enabled: Object.fromEntries(ALL_MISSIONS.map(m => [m.name, !!m.defaultOn]))
-      };
-    }
-    function clampInt(v, min, max){
-      const n = parseInt(v, 10);
-      if (Number.isNaN(n)) return min;
-      return Math.max(min, Math.min(max, n));
-    }
-    function loadSettings(){
-      try{
-        const raw = localStorage.getItem(STORE_KEY);
-        if (!raw) return defaultSettings();
-        const parsed = JSON.parse(raw);
-        const d = defaultSettings();
-        return {
-          countPerMission: clampInt(parsed.countPerMission ?? d.countPerMission, 1, 8),
-          enabled: { ...d.enabled, ...(parsed.enabled || {}) }
-        };
-      }catch{
-        return defaultSettings();
-      }
-    }
-    function saveSettings(s){
-      localStorage.setItem(STORE_KEY, JSON.stringify(s));
-    }
-    let settings = loadSettings();
-
-    /* Core game */
+    // ✅ 버그 수정: $ 함수는 1번만 선언 (V11에 있던 오류 제거)
     const $ = (id) => document.getElementById(id);
 
     const screenHome  = $("screenHome");
@@ -803,6 +668,7 @@
     const screenGame  = $("screenGame");
 
     const counterTop = $("counterTop");
+    const btnExit = $("btnExit");
 
     const btnStart = $("btnStart");
     const btnGuide = $("btnGuide");
@@ -824,27 +690,29 @@
     const btnToHome2 = $("btnToHome2");
     const lockHint = $("lockHint");
 
-    const btnSettings = $("btnSettings");
-    const btnExit = $("btnExit");
-    const overlaySettings = $("overlaySettings");
-    const btnSettingsClose = $("btnSettingsClose");
-    const btnSettingsSave = $("btnSettingsSave");
-    const btnSettingsReset = $("btnSettingsReset");
-    const missionList = $("missionList");
-    const countPerMissionLabel = $("countPerMissionLabel");
-    const btnCountDown = $("btnCountDown");
-    const btnCountUp = $("btnCountUp");
+    // ✅ 전체화면 토글
+    const btnFullscreen = $("btnFullscreen");
 
     let deck = [];
     let total = 0;
-
-    const GUIDE_MISSIONS = ALL_MISSIONS.map(m => ({ name: m.name }));
     let guideIndex = 0;
 
+    // 2-second lock
     const CLEAR_LOCK_SECONDS = 2;
     let clearLocked = false;
     let lockTimer = null;
     let lockTick = null;
+
+    function pickTheme(){
+      const t = THEMES[Math.floor(Math.random() * THEMES.length)];
+      document.documentElement.style.setProperty("--accent", t.accent);
+      document.documentElement.style.setProperty("--accent2", t.accent2);
+      document.documentElement.style.setProperty("--accent3", t.accent3);
+      document.documentElement.style.setProperty("--bgA", t.bgA);
+      document.documentElement.style.setProperty("--bgB", t.bgB);
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute("content", t.bgA);
+    }
 
     function shuffle(arr){
       const a = arr.slice();
@@ -855,21 +723,11 @@
       return a;
     }
 
-    function enabledMissionNames(){
-      return ALL_MISSIONS
-        .map(m => m.name)
-        .filter(name => settings.enabled[name]);
-    }
-
     function buildDeck(){
-      const enabled = enabledMissionNames();
-      const list = enabled.length ? enabled : ALL_MISSIONS.filter(m=>m.defaultOn).map(m=>m.name);
-
       const d = [];
-      const c = clampInt(settings.countPerMission, 1, 8);
-      for (const name of list){
-        for (let i=0;i<c;i++){
-          d.push({ name, id: name + "_" + i });
+      for (const m of MISSIONS){
+        for (let i = 0; i < 3; i++){
+          d.push({ name: m.name, id: m.name + "_" + i });
         }
       }
       return shuffle(d);
@@ -891,20 +749,9 @@
       counterTop.textContent = `(${current}/${total})`;
     }
 
-    function setHeaderButtons(which){
-      // Home: settings ON, exit OFF
-      // Guide: both OFF
-      // Game: settings OFF, exit ON
-      if (which === screenHome){
-        btnSettings.style.display = "inline-flex";
-        btnExit.style.display = "none";
-      } else if (which === screenGame){
-        btnSettings.style.display = "none";
-        btnExit.style.display = "inline-flex";
-      } else {
-        btnSettings.style.display = "none";
-        btnExit.style.display = "none";
-      }
+    function showExitButton(isOn){
+      if (isOn) btnExit.classList.add("on");
+      else btnExit.classList.remove("on");
     }
 
     function showScreen(which){
@@ -913,8 +760,13 @@
       screenGame.classList.remove("on");
       which.classList.add("on");
 
-      setCounterVisible(which === screenGame);
-      setHeaderButtons(which);
+      const isGame = (which === screenGame);
+
+      setCounterVisible(isGame);
+      showExitButton(isGame);
+
+      // 게임 화면에서는 당김 새로고침 방지(전체화면 아니어도)
+      document.body.classList.toggle("lockScroll", isGame || isFullscreen());
 
       overlayWin.classList.remove("on");
       overlayWin.setAttribute("aria-hidden", "true");
@@ -922,7 +774,7 @@
 
     function buildDots(){
       dotRow.innerHTML = "";
-      for (let i=0;i<GUIDE_MISSIONS.length;i++){
+      for (let i=0;i<MISSIONS.length;i++){
         const d = document.createElement("div");
         d.className = "dot" + (i===guideIndex ? " on" : "");
         dotRow.appendChild(d);
@@ -931,8 +783,9 @@
 
     function renderGuide(){
       buildDots();
-      const name = GUIDE_MISSIONS[guideIndex].name;
-      renderMissionMedia(missionIconGuide, name);
+      const name = MISSIONS[guideIndex].name;
+
+      renderMissionIcon(missionIconGuide, name);
 
       guideName.classList.remove("pop");
       void guideName.offsetWidth;
@@ -954,8 +807,8 @@
       }
     },{passive:true});
 
-    function nextGuide(){ guideIndex=(guideIndex+1)%GUIDE_MISSIONS.length; renderGuide(); }
-    function prevGuide(){ guideIndex=(guideIndex-1+GUIDE_MISSIONS.length)%GUIDE_MISSIONS.length; renderGuide(); }
+    function nextGuide(){ guideIndex=(guideIndex+1)%MISSIONS.length; renderGuide(); }
+    function prevGuide(){ guideIndex=(guideIndex-1+MISSIONS.length)%MISSIONS.length; renderGuide(); }
 
     function stopLockTimers(){
       if (lockTimer){ clearTimeout(lockTimer); lockTimer=null; }
@@ -1012,10 +865,12 @@
 
       const name = deck[0].name;
       cardNameEl.textContent = name;
-      renderMissionMedia(missionIconGame, name);
+
+      renderMissionIcon(missionIconGame, name);
 
       updateCounter();
       announce(name);
+
       setClearLocked(true);
     }
 
@@ -1034,7 +889,7 @@
 
     function startGame(){
       deck = buildDeck();
-      total = deck.length;
+      total = deck.length; // 18
       updateCounter();
       renderGame();
       showScreen(screenGame);
@@ -1045,71 +900,45 @@
       showScreen(screenHome);
     }
 
-    /* Settings UI */
-    function openSettings(){
-      overlaySettings.classList.add("on");
-      overlaySettings.setAttribute("aria-hidden","false");
-      renderSettingsUI();
+    // ✅ 전체화면 토글 + lockScroll
+    function isFullscreen(){
+      return !!(document.fullscreenElement || document.webkitFullscreenElement);
     }
-    function closeSettings(){
-      overlaySettings.classList.remove("on");
-      overlaySettings.setAttribute("aria-hidden","true");
-    }
-    function renderSettingsUI(){
-      countPerMissionLabel.textContent = String(settings.countPerMission);
 
-      missionList.innerHTML = "";
-      for (const m of ALL_MISSIONS){
-        const row = document.createElement("div");
-        row.className = "row";
+    async function toggleFullscreen(){
+      try{
+        const doc = document;
+        const el = document.documentElement;
+        const fs = isFullscreen();
 
-        const left = document.createElement("div");
-        left.className = "rowLeft";
-
-        const label = document.createElement("label");
-
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.checked = !!settings.enabled[m.name];
-        checkbox.addEventListener("change", () => {
-          settings.enabled[m.name] = checkbox.checked;
-        });
-
-        const thumb = document.createElement("div");
-        thumb.className = "thumb";
-
-        const url = PNG_URLS[m.name];
-        if (url){
-          const img = new Image();
-          img.alt = "";
-          img.decoding = "async";
-          img.loading = "lazy";
-          img.src = url;
-          img.onerror = () => { thumb.innerHTML = iconSvgFor(m.name); };
-          thumb.appendChild(img);
+        if (!fs){
+          if (el.requestFullscreen) await el.requestFullscreen();
+          else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+          document.body.classList.add("lockScroll");
         } else {
-          thumb.innerHTML = iconSvgFor(m.name);
+          if (doc.exitFullscreen) await doc.exitFullscreen();
+          else if (doc.webkitExitFullscreen) doc.webkitExitFullscreen();
+          // 홈이면 lockScroll 제거, 게임이면 유지
+          if (!screenGame.classList.contains("on")) {
+            document.body.classList.remove("lockScroll");
+          }
         }
+      } catch (e) {}
+    }
 
-        const text = document.createElement("div");
-        text.className = "missionLabel";
-        text.textContent = m.name;
-
-        label.appendChild(checkbox);
-        label.appendChild(thumb);
-        label.appendChild(text);
-
-        left.appendChild(label);
-        row.appendChild(left);
-        missionList.appendChild(row);
+    // 전체화면이 ESC/제스처로 종료된 경우도 복구
+    document.addEventListener("fullscreenchange", () => {
+      if (!isFullscreen() && !screenGame.classList.contains("on")) {
+        document.body.classList.remove("lockScroll");
       }
-    }
-    function resetSettings(){
-      settings = defaultSettings();
-      renderSettingsUI();
-    }
+    });
+    document.addEventListener("webkitfullscreenchange", () => {
+      if (!isFullscreen() && !screenGame.classList.contains("on")) {
+        document.body.classList.remove("lockScroll");
+      }
+    });
 
-    /* Bindings */
+    // ✅ 이벤트 바인딩
     btnStart.addEventListener("click", startGame);
     btnGuide.addEventListener("click", ()=>{
       guideIndex=0; renderGuide(); showScreen(screenGuide);
@@ -1123,35 +952,8 @@
     btnPass.addEventListener("click", passCard);
     btnToHome2.addEventListener("click", toHome);
 
-    // 종료 버튼(게임에서만 보임)
     btnExit.addEventListener("click", toHome);
-
-    // settings open/close (홈에서만 보임)
-    btnSettings.addEventListener("click", openSettings);
-    btnSettingsClose.addEventListener("click", closeSettings);
-    overlaySettings.addEventListener("click", (e)=>{
-      if (e.target === overlaySettings) closeSettings();
-    });
-
-    btnCountDown.addEventListener("click", ()=>{
-      settings.countPerMission = clampInt(settings.countPerMission - 1, 1, 8);
-      countPerMissionLabel.textContent = String(settings.countPerMission);
-    });
-    btnCountUp.addEventListener("click", ()=>{
-      settings.countPerMission = clampInt(settings.countPerMission + 1, 1, 8);
-      countPerMissionLabel.textContent = String(settings.countPerMission);
-    });
-
-    btnSettingsReset.addEventListener("click", resetSettings);
-    btnSettingsSave.addEventListener("click", ()=>{
-      const anyOn = Object.values(settings.enabled).some(Boolean);
-      if (!anyOn){
-        const d = defaultSettings();
-        settings.enabled = d.enabled;
-      }
-      saveSettings(settings);
-      closeSettings();
-    });
+    btnFullscreen.addEventListener("click", toggleFullscreen);
 
     // gestures: swipe up = clear, swipe left = pass
     let sx=0, sy=0, touching=false;
@@ -1170,7 +972,6 @@
       }
     },{passive:true});
 
-    /* Boot */
     pickTheme();
     showScreen(screenHome);
   </script>
